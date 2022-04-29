@@ -1,0 +1,63 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "fullTextIndex", "referentialIntegrity"]
+}
+
+datasource db {
+  provider             = "mysql"
+  referentialIntegrity = "prisma"
+  url                  = env("DATABASE_URL")
+  shadowDatabaseUrl    = env("SHADOW_DATABASE_URL")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model User {
+  id            String   @id @default(uuid())
+  email         String   @unique
+  username      String
+  password      String
+  role          Role
+  createdAt     DateTime @default(now())
+  token_version Int      @default(0)
+}
+
+model Noun {
+  id          String @id @default(cuid())
+  gender      String //enum?
+  declension  String
+  n_sg        String
+  g_sg        String
+  d_sg        String
+  acc_sg      String
+  ab_sg       String
+  voc_sg      String
+  n_pl        String
+  g_pl        String
+  d_pl        String
+  acc_pl      String
+  ab_pl       String
+  voc_pl      String
+  translation String
+  def         String
+}
+
+model Book {
+  id       String    @id @default(cuid())
+  title    String
+  chapters Chapter[]
+}
+
+model Chapter {
+  id     String @id @default(cuid())
+  title  String
+  text   String @db.Text
+  book   Book   @relation(fields: [bookId], references: [id])
+  bookId String
+}
