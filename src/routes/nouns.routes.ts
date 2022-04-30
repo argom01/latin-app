@@ -1,9 +1,9 @@
 import express from "express";
-import * as booksControllers from "controllers/books.controllers";
+import * as nounsControllers from "controllers/nouns.controllers";
 import { user } from "middleware/auth.middleware";
 
 const router = express.Router();
 
-router.post("/", booksControllers.addBook);
+router.post("/", nounsControllers.addNoun);
 
 export default router;
