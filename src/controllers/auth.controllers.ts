@@ -2,9 +2,9 @@ import type { Request, Response, NextFunction } from 'express';
 import { hash, compare } from 'bcryptjs';
 import { verify } from 'jsonwebtoken';
 import createHttpError from 'http-errors';
-import { createAccessToken, createRefreshToken } from '../shared/auth';
-import sendRefreshToken from '../shared/sendRefreshToken';
-import prisma from '../shared/prisma';
+import { createAccessToken, createRefreshToken } from 'shared/auth';
+import sendRefreshToken from 'shared/sendRefreshToken';
+import prisma from 'shared/prisma';
 
 // post /api/v1/auth/register
 export const register = async (req: Request, res: Response, next: NextFunction) => {
