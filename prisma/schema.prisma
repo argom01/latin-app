@@ -32,7 +32,7 @@ model Noun {
   id          String @id @default(cuid())
   gender      String //enum?
   declension  String
-  nSg         String
+  nSg         String @unique
   gSg         String
   dSg         String
   accSg       String
