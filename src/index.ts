@@ -6,7 +6,7 @@ import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import booksRouter from '@/routes/books.routes';
+import booksRouter from 'routes/books.routes';
 
 dotenv.config();
 
@@ -43,7 +43,7 @@ app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
 });
 
 app.listen(port, () => {
-	console.log(`[server]: Server is running at https://localhost:${port}`);
+	console.log(`[server]: Server is running at http://localhost:${port}`);
 });
 
 export const viteNodeApp = app;

@@ -8,14 +8,14 @@ export default defineConfig({
 		// vite server configs, for details see [vite doc](https://vitejs.dev/config/#server-host)
 		port: 3000,
 	},
-	resolve: {
-		alias: [{ find: '@', replacement: path.resolve(__dirname, 'src') }],
-	},
+	// resolve: {
+	// 	alias: [{ find: '@', replacement: path.resolve(__dirname, 'src') }],
+	// },
 	plugins: [
 		...VitePluginNode({
 			adapter: 'express',
 			appPath: './src/index.ts',
-			tsCompiler: 'swc',
+			tsCompiler: 'esbuild',
 
 			// Optional, default: {
 			// jsc: {

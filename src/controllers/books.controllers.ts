@@ -1,5 +1,5 @@
 import type { NextFunction, Request, Response } from 'express';
-import prisma from '@/shared/prisma';
+import prisma from 'shared/prisma';
 
 export const addBook = async (req: Request, res: Response, next: NextFunction) => {
 	try {
