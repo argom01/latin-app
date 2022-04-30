@@ -7,6 +7,7 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import booksRouter from 'routes/books.routes';
+import authRouter from 'routes/auth.routes';
 
 dotenv.config();
 
@@ -29,6 +30,7 @@ app.get('/', async (_req, res, _next) => {
 });
 
 app.use('/api/v1/books', booksRouter);
+app.use('/api/v1/', authRouter);
 
 app.use((_req, _res, next) => {
 	next(new createError.NotFound());

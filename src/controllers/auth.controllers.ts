@@ -53,7 +53,7 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
 };
 
 // post /api/v1/auth/logout
-export const logout = async (_req, res: Response, next: NextFunction) => {
+export const logout = async (_req: Request, res: Response, next: NextFunction) => {
 	try {
 		sendRefreshToken(res, '');
 		res.send({ ok: true, accessToken: '' });
@@ -82,7 +82,7 @@ export const deleteUser = async (req: Request, res: Response, next: NextFunction
 };
 
 // get /api/v1/auth/users
-export const users = async (_req, res: Response, next: NextFunction) => {
+export const users = async (_req: Request, res: Response, next: NextFunction) => {
 	try {
 		const users = await prisma.user.findMany({
 			select: {
@@ -109,7 +109,7 @@ export const refresh_token = async (req: Request, res: Response) => {
 		}
 
 		try {
-			payload = verify(token, process.env.JWT_REFRESH_TOKEN_SECRET);
+			payload = verify(token, process.env.JWT_REFRESH_TOKEN_SECRET!);
 		} catch (error) {
 			return res.send({ ok: false, accessToken: '' });
 		}
@@ -125,7 +125,7 @@ export const refresh_token = async (req: Request, res: Response) => {
 		}
 
 		sendRefreshToken(res, createRefreshToken(user));
-		res.send({ ok: true, accessToken: createAccessToken(user) });
+		return res.send({ ok: true, accessToken: createAccessToken(user) });
 	} catch (error) {
 		return res.status(500).send({ error, ok: false, accessToken: '' });
 	}
