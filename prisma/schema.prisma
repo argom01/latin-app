@@ -19,31 +19,31 @@ enum Role {
 }
 
 model User {
-  id            String   @id @default(uuid())
-  email         String   @unique
-  username      String
-  password      String
-  role          Role
-  createdAt     DateTime @default(now())
-  token_version Int      @default(0)
+  id           String   @id @default(uuid())
+  email        String   @unique
+  username     String
+  password     String
+  role         Role
+  createdAt    DateTime @default(now())
+  tokenVersion Int      @default(0)
 }
 
 model Noun {
   id          String @id @default(cuid())
   gender      String //enum?
   declension  String
-  n_sg        String
-  g_sg        String
-  d_sg        String
-  acc_sg      String
-  ab_sg       String
-  voc_sg      String
-  n_pl        String
-  g_pl        String
-  d_pl        String
-  acc_pl      String
-  ab_pl       String
-  voc_pl      String
+  nSg         String
+  gSg         String
+  dSg         String
+  accSg       String
+  abSg        String
+  vocSg       String
+  nPl         String
+  gPl         String
+  dPl         String
+  accPl       String
+  abPl        String
+  vocPl       String
   translation String
   def         String
 }

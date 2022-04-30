@@ -24,10 +24,12 @@
 		"morgan": "^1.10.0"
 	},
 	"devDependencies": {
+		"@types/bcryptjs": "^2.4.2",
 		"@types/cookie-parser": "^1.4.3",
 		"@types/cors": "^2.8.12",
 		"@types/express": "^4.17.13",
 		"@types/http-errors": "^1.8.2",
+		"@types/jsonwebtoken": "^8.5.8",
 		"@types/morgan": "^1.9.3",
 		"@types/node": "^17.0.30",
 		"concurrently": "^7.1.0",
