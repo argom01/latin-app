@@ -5,6 +5,17 @@ import { prismaErrorHandler } from "errors/prisma.errors";
 
 const router = express.Router();
 
-router.post("/", booksControllers.addBook, prismaErrorHandler);
+router.post("/books", booksControllers.addBook, prismaErrorHandler);
+router.get("/books", booksControllers.findBooks, prismaErrorHandler);
+router.post(
+    "/books/:id/chapters",
+    booksControllers.addChapter,
+    prismaErrorHandler
+);
+router.get(
+    "/books/chapters/:id",
+    booksControllers.findChapter,
+    prismaErrorHandler
+);
 
 export default router;

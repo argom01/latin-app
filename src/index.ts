@@ -30,8 +30,8 @@ app.get("/", async (_req, res, _next) => {
     res.send(`Server is running in ${process.env.NODE_ENV}`);
 });
 
-app.use("/api/v1/books", booksRouter);
-app.use("/api/v1/nouns", nounsRouter);
+app.use("/api/v1/", booksRouter);
+app.use("/api/v1/", nounsRouter);
 app.use("/api/v1/", authRouter);
 
 app.use((_req, _res, next) => {
