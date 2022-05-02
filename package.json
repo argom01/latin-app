@@ -4,7 +4,7 @@
 	"description": "",
 	"main": "index.ts",
 	"scripts": {
-		"start": "node dist/index.js",
+		"start": "node --optimize_for_size --max_old_space_size=460 --gc_interval=100 dist/index.js",
 		"build": "esbuild src/index.ts --bundle --minify --platform=node --target=node16.15.0 --external:./node_modules/* --outfile=dist/index.js",
 		"dev": "concurrently \"esbuild src/index.ts --bundle --minify --watch --platform=node --target=node16.15.0 --external:./node_modules/ --outfile=dist/index.js\" \"nodemon -q dist/index.js\""
 	},
