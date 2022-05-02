@@ -13,7 +13,7 @@ export const addBook = async (
         const { id, title }: TAddBookData = req.body.data;
         const insertedBook = await prisma.book.upsert({
             where: {
-                id,
+                id: id || "",
             },
             update: {
                 title,
@@ -63,7 +63,7 @@ export const addChapter = async (
         const { id, title, text }: TAddChapterData = req.body.data;
         const insertedChapter = await prisma.chapter.upsert({
             where: {
-                id,
+                id: id || "",
             },
             update: {
                 title,
