@@ -9,6 +9,12 @@ router.post("/register", authControllers.register, prismaErrorHandler);
 router.post("/login", authControllers.login, prismaErrorHandler);
 router.post("/logout", user, authControllers.logout);
 router.get("/users", admin, authControllers.users, prismaErrorHandler);
+router.patch(
+    "/users/:id",
+    admin,
+    authControllers.changeUserRole,
+    prismaErrorHandler
+);
 router.delete(
     "/users/:id",
     admin,
