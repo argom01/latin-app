@@ -15,22 +15,11 @@ dotenv.config();
 const app: Express = express();
 const port = process.env.PORT;
 
-app.use(
-    cors({
-        origin: process.env.HOSTNAME,
-        credentials: true,
-    })
-);
+app.use(cors());
 
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(morgan("dev"));
-app.use(
-    cors({
-        origin: "http://localhost:3000",
-        credentials: true,
-    })
-);
 
 app.get("/", async (_req, res, _next) => {
     res.send(`Server is running in ${process.env.NODE_ENV}`);
