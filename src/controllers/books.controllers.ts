@@ -1,12 +1,12 @@
 import type { Request, Response, NextFunction } from 'express';
 import createHttpError from 'http-errors';
 import prisma from 'shared/prisma';
-import type { IAddChapterData, IAddBooksData } from 'types/books.types';
+import type { TAddChapterData, TAddBooksData } from 'types/books.types';
 
 // [POST] /api/v1/books
 export const addBook = async (req: Request, res: Response, next: NextFunction) => {
 	try {
-		const { id, title }: IAddBooksData = req.body.data;
+		const { id, title }: TAddBooksData = req.body.data;
 		const insertedBook = await prisma.book.upsert({
 			where: {
 				id,
@@ -48,7 +48,7 @@ export const addChapter = async (req: Request, res: Response, next: NextFunction
 			return next(createHttpError(400, 'No book id'));
 		}
 
-		const { id, title, text }: IAddChapterData = req.body.data;
+		const { id, title, text }: TAddChapterData = req.body.data;
 		const insertedChapter = await prisma.chapter.upsert({
 			where: {
 				id,

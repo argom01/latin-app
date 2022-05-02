@@ -1,10 +1,10 @@
-export interface IAddBooksData {
+export type TAddBooksData = {
 	id: string | undefined;
 	title: string;
-}
+};
 
-export interface IAddChapterData {
+export type TAddChapterData = {
 	id: string | undefined;
 	title: string;
 	text: string;
-}
+};

@@ -5,12 +5,12 @@ import createHttpError from 'http-errors';
 import { createAccessToken, createRefreshToken } from 'shared/auth';
 import sendRefreshToken from 'shared/sendRefreshToken';
 import prisma from 'shared/prisma';
-import type { ILoginData, IRegisterData } from 'types/auth.types';
+import type { TLoginData, TRegisterData } from 'types/auth.types';
 
 // [POST] /api/v1/auth/register
 export const register = async (req: Request, res: Response, next: NextFunction) => {
 	try {
-		const { username, email, password, role }: IRegisterData = req.body.data;
+		const { username, email, password, role }: TRegisterData = req.body.data;
 		const hashedPassword = await hash(password, 12);
 
 		await prisma.user.create({
@@ -32,7 +32,7 @@ export const register = async (req: Request, res: Response, next: NextFunction) 
 // [POST] /api/v1/auth/login
 export const login = async (req: Request, res: Response, next: NextFunction) => {
 	try {
-		const { email, password }: ILoginData = req.body.data;
+		const { email, password }: TLoginData = req.body.data;
 
 		const user = await prisma.user.findUnique({ where: { email } });
 
