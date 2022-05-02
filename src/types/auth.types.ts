@@ -1,11 +1,11 @@
-export interface IRegisterData {
+export type TRegisterData = {
 	username: string;
 	email: string;
 	password: string;
 	role: 'ADMIN' | 'USER';
-}
+};
 
-export interface ILoginData {
+export type TLoginData = {
 	email: string;
 	password: string;
-}
+};
