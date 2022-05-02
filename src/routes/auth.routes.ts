@@ -5,7 +5,7 @@ import { prismaErrorHandler } from "errors/prisma.errors";
 
 const router = express.Router();
 
-router.post("/register", admin, authControllers.register, prismaErrorHandler);
+router.post("/register", authControllers.register, prismaErrorHandler);
 router.post("/login", authControllers.login, prismaErrorHandler);
 router.post("/logout", user, authControllers.logout);
 router.get("/users", admin, authControllers.users, prismaErrorHandler);
