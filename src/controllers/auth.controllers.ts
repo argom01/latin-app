@@ -14,20 +14,19 @@ export const register = async (
     next: NextFunction
 ) => {
     try {
-        const { username, email, password, role }: TRegisterData =
-            req.body.data;
+        const { username, email, password }: TRegisterData = req.body.data;
         const hashedPassword = await hash(password, 12);
 
-        await prisma.user.create({
+        const user = await prisma.user.create({
             data: {
                 username,
                 email,
                 password: hashedPassword,
-                role,
             },
         });
 
-        res.send("User created successfully");
+        sendRefreshToken(res, createRefreshToken(user));
+        res.send({ ok: true, accessToken: createAccessToken(user) });
     } catch (error) {
         console.log(error);
         next(error);
