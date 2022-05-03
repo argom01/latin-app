@@ -1,4 +1,4 @@
-import express from "express";
+import express, { NextFunction } from "express";
 import type { Express, Request, Response } from "express";
 import createError from "http-errors";
 import morgan from "morgan";
@@ -38,12 +38,9 @@ app.use((_req, _res, next) => {
     next(new createError.NotFound());
 });
 
-app.use((err: any, _req: Request, res: Response) => {
+app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
     res.status(err.status || 500);
-    res.send({
-        status: err.status || 500,
-        message: err.message,
-    });
+    res.send({ message: err.message });
 });
 
 app.listen(port, () => {
