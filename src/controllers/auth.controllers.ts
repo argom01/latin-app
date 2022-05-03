@@ -15,6 +15,11 @@ export const register = async (
 ) => {
     try {
         const { username, email, password }: TRegisterData = req.body.data;
+
+        if (!password) {
+            return next(createHttpError(400, "No password"));
+        }
+
         const hashedPassword = await hash(password, 12);
 
         const user = await prisma.user.create({
@@ -41,6 +46,10 @@ export const login = async (
 ) => {
     try {
         const { email, password }: TLoginData = req.body.data;
+
+        if (!password) {
+            return next(createHttpError(400, "No password"));
+        }
 
         const user = await prisma.user.findUnique({ where: { email } });
 
@@ -148,7 +157,7 @@ export const users = async (
     }
 };
 
-// [POST] /api/v1/auth/refresh_token
+// [GET] /api/v1/auth/refresh_token
 export const refresh_token = async (req: Request, res: Response) => {
     try {
         const token: string | undefined = req.cookies.jid;

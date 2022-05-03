@@ -8,7 +8,9 @@ export const prismaErrorHandler = (
     _res: Response,
     next: NextFunction
 ) => {
-    if (err instanceof Prisma.PrismaClientKnownRequestError) {
+    if (err instanceof Prisma.PrismaClientValidationError) {
+        next(createHttpError(400, err.message));
+    } else if (err instanceof Prisma.PrismaClientKnownRequestError) {
         switch (err.code) {
             case "P2002":
                 return next(
