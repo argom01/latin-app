@@ -58,6 +58,6 @@ model Chapter {
   id     String @id @default(cuid())
   title  String
   text   String @db.Text
-  book   Book   @relation(fields: [bookId], references: [id])
+  book   Book   @relation(fields: [bookId], references: [id], onDelete: Cascade)
   bookId String
 }

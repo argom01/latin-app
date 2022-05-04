@@ -8,17 +8,20 @@ Built on Express + TypeScript + Prisma + PlanetScale.
     -   [POST] /login
     -   [POST] /register
     -   [POST] /logout
-    -   [POST] /users/search
-    -   [GET] /users
-    -   [GET] /users/me
-    -   [DELETE] /users/:id
-    -   [PATCH] /users/:id/roles
     -   [GET] /refresh_token
 -   /api/v1/
-    -   [POST] /books
+    -   [GET] /users
+    -   [GET] /users/me
+    -   [POST] /users/search
+    -   [DELETE] /users/:id
+    -   [PATCH] /users/:id/roles
+-   /api/v1/
     -   [GET] /books
+    -   [POST] /books
+    -   [DELETE] /books/:id
     -   [POST] /books/:id/chapters
-    -   [GET] /books/chapters/
+    -   [GET] /books/chapters/:id
+    -   [DELETE] /books/chapters/:id
 -   /api/v1/
     -   [POST] /nouns
 

@@ -9,7 +9,7 @@ export const prismaErrorHandler = (
     next: NextFunction
 ) => {
     if (err instanceof Prisma.PrismaClientValidationError) {
-        next(createHttpError(400, err.message));
+        return next(createHttpError(400, err.message));
     } else if (err instanceof Prisma.PrismaClientKnownRequestError) {
         switch (err.code) {
             case "P2002":
@@ -18,6 +18,8 @@ export const prismaErrorHandler = (
                 );
             case "P2015":
                 return next(createHttpError(404, "Record does not exist"));
+            case "P2025":
+                return next(createHttpError(404, "Record not found"));
             default:
                 return next(createHttpError(500, "Internal database error"));
         }
