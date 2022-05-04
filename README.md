@@ -8,9 +8,11 @@ Built on Express + TypeScript + Prisma + PlanetScale.
     -   [POST] /login
     -   [POST] /register
     -   [POST] /logout
+    -   [POST] /users/search
     -   [GET] /users
+    -   [GET] /users/me
     -   [DELETE] /users/:id
-    -   [PATCH] /users/:id
+    -   [PATCH] /users/:id/roles
     -   [GET] /refresh_token
 -   /api/v1/
     -   [POST] /books

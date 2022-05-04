@@ -5,7 +5,6 @@ const sendRefreshToken = (res: Response, token: string) => {
         httpOnly: true,
         sameSite: "none",
         secure: true,
-        path: "/api/v1/auth/refresh_token",
     });
 };
 
