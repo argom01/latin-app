@@ -193,13 +193,14 @@ export const searchUsers = async (
                 createdAt: true,
             },
         });
-        const mappedUsers = users.map((user) => {
-            return {
-                value: { ...user },
-                label: `${user.email} (${user.username})`,
-            };
-        });
-        res.send(mappedUsers);
+        // const mappedUsers = users.map((user) => {
+        //     return {
+        //         value: { ...user },
+        //         label: `${user.email} (${user.username})`,
+        //     };
+        // });
+        // res.send(mappedUsers);
+        res.send(users);
     } catch (error) {
         next(error);
     }
@@ -212,24 +213,9 @@ export const getMe = async (
     next: NextFunction
 ) => {
     try {
-        const token: string | undefined = req.cookies.jid;
-        console.log(token);
-
-        let payload: any = null;
-
-        if (!token) {
-            return next(createHttpError(401, "No refresh token"));
-        }
-
-        try {
-            payload = verify(token, process.env.JWT_REFRESH_TOKEN_SECRET!);
-        } catch (error) {
-            return next(createHttpError(401, "Invalid refresh token"));
-        }
-
         const me = await prisma.user.findUnique({
             where: {
-                id: payload.userId,
+                id: req.payload.userId,
             },
             select: {
                 id: true,
