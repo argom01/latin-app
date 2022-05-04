@@ -5,6 +5,6 @@ import { user } from "middleware/auth.middleware";
 
 const router = express.Router();
 
-router.post("/nouns", nounsControllers.addNoun, prismaErrorHandler);
+router.post("/", nounsControllers.addNoun, prismaErrorHandler);
 
 export default router;

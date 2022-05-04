@@ -20,6 +20,11 @@ export const addBook = async (
             },
             create: {
                 title,
+                ownerId: req.payload.userId,
+            },
+            select: {
+                id: true,
+                title: true,
             },
         });
 
@@ -32,12 +37,15 @@ export const addBook = async (
 
 // [GET] /api/v1/books
 export const findBooks = async (
-    _req: Request,
+    req: Request,
     res: Response,
     next: NextFunction
 ) => {
     try {
         const books = await prisma.book.findMany({
+            where: {
+                ownerId: req.payload.userId,
+            },
             include: {
                 chapters: {
                     select: {

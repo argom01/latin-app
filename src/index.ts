@@ -9,6 +9,7 @@ import dotenv from "dotenv";
 import booksRouter from "routes/books.routes";
 import nounsRouter from "routes/nouns.routes";
 import authRouter from "routes/auth.routes";
+import usersRouter from "routes/users.routes";
 
 dotenv.config();
 
@@ -30,9 +31,10 @@ app.get("/", async (_req, res, _next) => {
     res.send(`Server is running in ${process.env.NODE_ENV}`);
 });
 
-app.use("/api/v1/", booksRouter);
-app.use("/api/v1/", nounsRouter);
+app.use("/api/v1/books", booksRouter);
+app.use("/api/v1/nouns", nounsRouter);
 app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/users", usersRouter);
 
 app.use((_req, _res, next) => {
     next(new createError.NotFound());

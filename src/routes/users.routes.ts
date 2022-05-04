@@ -5,23 +5,15 @@ import { prismaErrorHandler } from "errors/prisma.errors";
 
 const router = express.Router();
 
-router.get("/users", admin, usersControllers.users, prismaErrorHandler);
-router.post(
-    "/users/search",
-    admin,
-    usersControllers.searchUsers,
-    prismaErrorHandler
-);
+router.get("/", admin, usersControllers.users, prismaErrorHandler);
+router.post("/search", admin, usersControllers.searchUsers, prismaErrorHandler);
 router.patch(
-    "/users/:id/roles",
+    "/:id/roles",
     admin,
     usersControllers.changeUserRole,
     prismaErrorHandler
 );
-router.delete(
-    "/users/:id",
-    admin,
-    usersControllers.deleteUser,
-    prismaErrorHandler
-);
-router.get("/users/me", user, usersControllers.getMe, prismaErrorHandler);
+router.delete("/:id", admin, usersControllers.deleteUser, prismaErrorHandler);
+router.get("/me", user, usersControllers.getMe, prismaErrorHandler);
+
+export default router;

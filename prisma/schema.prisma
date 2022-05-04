@@ -26,6 +26,7 @@ model User {
   role         Role     @default(USER)
   createdAt    DateTime @default(now())
   tokenVersion Int      @default(0)
+  Book         Book[]
 }
 
 model Noun {
@@ -52,6 +53,8 @@ model Book {
   id       String    @id @default(cuid())
   title    String
   chapters Chapter[]
+  owner    User      @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  ownerId  String
 }
 
 model Chapter {

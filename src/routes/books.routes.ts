@@ -5,21 +5,24 @@ import { prismaErrorHandler } from "errors/prisma.errors";
 
 const router = express.Router();
 
-router.post("/books", booksControllers.addBook, prismaErrorHandler);
-router.get("/books", booksControllers.findBooks, prismaErrorHandler);
-router.delete("/books/:id", booksControllers.deleteBook, prismaErrorHandler);
+router.post("/", user, booksControllers.addBook, prismaErrorHandler);
+router.get("/", user, booksControllers.findBooks, prismaErrorHandler);
+router.delete("/:id", user, booksControllers.deleteBook, prismaErrorHandler);
 router.post(
-    "/books/:id/chapters",
+    "/:id/chapters",
+    user,
     booksControllers.addChapter,
     prismaErrorHandler
 );
 router.get(
-    "/books/chapters/:id",
+    "/chapters/:id",
+    user,
     booksControllers.findChapter,
     prismaErrorHandler
 );
 router.delete(
-    "/books/chapters/:id",
+    "/chapters/:id",
+    user,
     booksControllers.deleteChapter,
     prismaErrorHandler
 );
