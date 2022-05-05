@@ -6,6 +6,7 @@ import { createAccessToken, createRefreshToken } from "shared/auth";
 import sendRefreshToken from "shared/sendRefreshToken";
 import prisma from "shared/prisma";
 import type { TLoginData, TRegisterData } from "types/auth.types";
+import { sendVerificationEmail } from "mail/mail";
 
 // [POST] /api/v1/auth/register
 export const register = async (
@@ -30,10 +31,64 @@ export const register = async (
             },
         });
 
+        sendVerificationEmail(user);
         sendRefreshToken(res, createRefreshToken(user));
         res.send({ ok: true, accessToken: createAccessToken(user) });
     } catch (error) {
         console.log(error);
+        next(error);
+    }
+};
+
+// [GET] /api/v1/auth/confirmation
+export const resendConfirmationEmail = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        const userId = req.payload.userId;
+        const user = await prisma.user.findUnique({
+            where: {
+                id: userId,
+            },
+        });
+        sendVerificationEmail(user!);
+        res.send("Verification email resent");
+    } catch (error) {
+        next(error);
+    }
+};
+
+// [GET] /api/v1/auth/confirmation/:token
+export const validateUser = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        const token = req.params.token;
+
+        if (!token) {
+            return next(createHttpError(400, "No token"));
+        }
+
+        const payload: any = verify(token, process.env.JWT_EMAIL_TOKEN_SECRET!);
+
+        if (!payload) {
+            return next(createHttpError(401, "Token is not valid"));
+        }
+
+        await prisma.user.update({
+            where: {
+                id: payload.userId,
+            },
+            data: {
+                isVerified: true,
+            },
+        });
+        res.send("User verified successfully");
+    } catch (error) {
         next(error);
     }
 };

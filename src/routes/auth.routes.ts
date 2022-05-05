@@ -9,5 +9,16 @@ router.post("/register", authControllers.register, prismaErrorHandler);
 router.post("/login", authControllers.login, prismaErrorHandler);
 router.post("/logout", user, authControllers.logout);
 router.get("/refresh_token", authControllers.refreshToken);
+router.get(
+    "/confirmation",
+    user,
+    authControllers.resendConfirmationEmail,
+    prismaErrorHandler
+);
+router.get(
+    "/confirmation/:token",
+    authControllers.validateUser,
+    prismaErrorHandler
+);
 
 export default router;
