@@ -21,6 +21,7 @@ export const createEmailToken = (user: User) => {
 
 export const sendVerificationEmail = (user: User) => {
     const emailToken = createEmailToken(user);
+    // nazwa hosta nie moze byc ze zmiennej srodowiskowej bo render to zmienia na jakies gowno ???
     const url = `https://latin-app.onrender.com/api/v1/auth/confirmation/${emailToken}`;
 
     transporter.sendMail({

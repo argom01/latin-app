@@ -49,7 +49,7 @@ export const changeUserRole = async (
             },
         });
 
-        if (!isVerified && role === "ADMIN") {
+        if (!isVerified!.isVerified && role === "ADMIN") {
             return next(createHttpError(403, "User not validated"));
         }
 
