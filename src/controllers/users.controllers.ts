@@ -53,16 +53,24 @@ export const changeUserRole = async (
             return next(createHttpError(403, "User not validated"));
         }
 
-        await prisma.user.update({
+        const updatedUser = await prisma.user.update({
             where: {
                 id,
             },
             data: {
                 role,
             },
+            select: {
+                id: true,
+                email: true,
+                username: true,
+                role: true,
+                createdAt: true,
+                isVerified: true,
+            },
         });
 
-        res.send("User updated successfully");
+        res.send(updatedUser);
     } catch (error) {
         next(error);
     }
