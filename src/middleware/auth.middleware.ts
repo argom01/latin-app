@@ -26,7 +26,7 @@ export const admin = (req: Request, _res: Response, next: NextFunction) => {
             process.env.JWT_ACCESS_TOKEN_SECRET!
         );
 
-        if (payload.role !== roles.admin || !payload.isVerified) {
+        if (payload.role !== roles.admin) {
             return next(createHttpError(403));
         }
 

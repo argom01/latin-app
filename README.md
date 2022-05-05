@@ -12,7 +12,7 @@ Built on Express + TypeScript + Prisma + PlanetScale.
     -   [GET] /confirmation/:token
     -   [GET] /refresh_token
 -   /api/v1/
-    -   [GET] /users
+    -   [GET] /users/:id
     -   [GET] /users/me
     -   [POST] /users/search
     -   [DELETE] /users/:id

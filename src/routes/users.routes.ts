@@ -5,7 +5,7 @@ import { prismaErrorHandler } from "errors/prisma.errors";
 
 const router = express.Router();
 
-router.get("/", admin, usersControllers.users, prismaErrorHandler);
+router.get("/:id", admin, usersControllers.getUser, prismaErrorHandler);
 router.post("/search", admin, usersControllers.searchUsers, prismaErrorHandler);
 router.patch(
     "/:id/roles",

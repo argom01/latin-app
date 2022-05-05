@@ -68,19 +68,28 @@ export const changeUserRole = async (
     }
 };
 
-// [GET] /api/v1/auth/users
-export const users = async (
-    _req: Request,
+// [GET] /api/v1/auth/user/:id
+export const getUser = async (
+    req: Request,
     res: Response,
     next: NextFunction
 ) => {
     try {
-        const users = await prisma.user.findMany({
+        const id = req.params.id;
+        if (!id) {
+            next(createHttpError(400, "No user id provided"));
+        }
+
+        const users = await prisma.user.findUnique({
+            where: {
+                id,
+            },
             select: {
                 id: true,
-                username: true,
                 email: true,
+                username: true,
                 role: true,
+                createdAt: true,
                 isVerified: true,
             },
         });
