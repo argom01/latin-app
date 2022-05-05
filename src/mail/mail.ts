@@ -21,7 +21,7 @@ export const createEmailToken = (user: User) => {
 
 export const sendVerificationEmail = (user: User) => {
     const emailToken = createEmailToken(user);
-    const url = `${process.env.HOSTNAME}/api/v1/auth/confirmation/${emailToken}`;
+    const url = `${process.env.DUPSKO}/api/v1/auth/confirmation/${emailToken}`;
 
     transporter.sendMail({
         from: process.env.EMAIL_USERNAME,
