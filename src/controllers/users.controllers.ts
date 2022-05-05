@@ -40,6 +40,19 @@ export const changeUserRole = async (
             return next(createHttpError(400, "No user id provided"));
         }
 
+        const isVerified = await prisma.user.findUnique({
+            where: {
+                id,
+            },
+            select: {
+                isVerified: true,
+            },
+        });
+
+        if (!isVerified && role === "ADMIN") {
+            return next(createHttpError(403, "User not validated"));
+        }
+
         await prisma.user.update({
             where: {
                 id,
@@ -68,6 +81,7 @@ export const users = async (
                 username: true,
                 email: true,
                 role: true,
+                isVerified: true,
             },
         });
         res.send(users);
@@ -106,6 +120,7 @@ export const searchUsers = async (
                 username: true,
                 role: true,
                 createdAt: true,
+                isVerified: true,
             },
         });
         // const mappedUsers = users.map((user) => {
@@ -138,6 +153,7 @@ export const getMe = async (
                 username: true,
                 role: true,
                 createdAt: true,
+                isVerified: true,
             },
         });
         res.send(me);

@@ -8,6 +8,8 @@ Built on Express + TypeScript + Prisma + PlanetScale.
     -   [POST] /login
     -   [POST] /register
     -   [POST] /logout
+    -   [GET] /confirmation
+    -   [GET] /confirmation/:token
     -   [GET] /refresh_token
 -   /api/v1/
     -   [GET] /users

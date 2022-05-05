@@ -3,7 +3,7 @@ import { sign } from "jsonwebtoken";
 
 export const createAccessToken = (user: User) => {
     return sign(
-        { userId: user.id, role: user.role },
+        { userId: user.id, role: user.role, isVerified: user.isVerified },
         process.env.JWT_ACCESS_TOKEN_SECRET!,
         {
             expiresIn: "5m",
