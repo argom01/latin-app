@@ -10,6 +10,8 @@ Built on Express + TypeScript + Prisma + PlanetScale.
     -   [POST] /logout
     -   [GET] /confirmation
     -   [GET] /confirmation/:token
+    -   [POST] /recover_account
+    -   [POST] /recover_account/:token
     -   [GET] /refresh_token
 -   /api/v1/
     -   [GET] /users/:id

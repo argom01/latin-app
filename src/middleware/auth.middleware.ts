@@ -62,3 +62,22 @@ export const user = (req: Request, _res: Response, next: NextFunction) => {
         next(createHttpError(401, "Token is not valid"));
     }
 };
+
+export const verifyUrlToken = (
+    req: Request,
+    _res: Response,
+    next: NextFunction
+) => {
+    try {
+        const token = req.params.token;
+        if (!token) {
+            return next(createHttpError(404));
+        }
+
+        const payload: any = verify(token, process.env.JWT_EMAIL_TOKEN_SECRET!);
+
+        next(payload);
+    } catch (error) {
+        next(createHttpError(401, "Token is not valid"));
+    }
+};

@@ -1,6 +1,6 @@
 import express from "express";
 import * as authControllers from "controllers/auth.controllers";
-import { user } from "middleware/auth.middleware";
+import { user, verifyUrlToken } from "middleware/auth.middleware";
 import { prismaErrorHandler } from "errors/prisma.errors";
 
 const router = express.Router();
@@ -17,7 +17,19 @@ router.get(
 );
 router.get(
     "/confirmation/:token",
+    verifyUrlToken,
     authControllers.validateUser,
+    prismaErrorHandler
+);
+router.post(
+    "recover_account",
+    authControllers.recoverAccount,
+    prismaErrorHandler
+);
+router.post(
+    "recover_account/:token",
+    verifyUrlToken,
+    authControllers.changePassword,
     prismaErrorHandler
 );
 

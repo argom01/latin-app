@@ -31,3 +31,15 @@ export const sendVerificationEmail = (user: User) => {
         text: url,
     });
 };
+
+export const sendPasswordResetEmail = (user: User) => {
+    const emailToken = createEmailToken(user);
+    const url = `https://latin-app.onrender.com/api/v1/auth/recover_account/${emailToken}`;
+
+    transporter.sendMail({
+        from: process.env.EMAIL_USERNAME,
+        to: user.email,
+        subject: "Password Reset",
+        text: url,
+    });
+};
