@@ -70,7 +70,7 @@ export const deleteBook = async (
     try {
         const bookId = req.params.id;
         if (!bookId) {
-            return next(createHttpError(400, "No book id"));
+            return next(createHttpError(404));
         }
 
         await prisma.book.delete({
@@ -94,7 +94,7 @@ export const addChapter = async (
     try {
         const bookId = req.params.id;
         if (!bookId) {
-            return next(createHttpError(400, "No book id"));
+            return next(createHttpError(404));
         }
 
         if (
@@ -104,7 +104,7 @@ export const addChapter = async (
                 },
             }))
         ) {
-            return next(createHttpError(400, "Wrong book id"));
+            return next(createHttpError(404));
         }
 
         const { id, title, text }: TAddChapterData = req.body.data;
@@ -137,7 +137,7 @@ export const deleteChapter = async (
     try {
         const chapterId = req.params.id;
         if (!chapterId) {
-            return next(createHttpError(400, "No chapter id"));
+            return next(createHttpError(404));
         }
 
         await prisma.chapter.delete({
@@ -160,7 +160,7 @@ export const findChapter = async (
     try {
         const chapterId = req.params.id;
         if (!chapterId) {
-            return next(createHttpError(400, "No chapter id"));
+            return next(createHttpError(404));
         }
 
         const chapter = await prisma.chapter.findUnique({

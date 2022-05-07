@@ -13,7 +13,7 @@ export const deleteUser = async (
         const id = req.params.id;
 
         if (!id) {
-            return next(createHttpError(400, "No user id provided"));
+            return next(createHttpError(404));
         }
 
         await prisma.user.delete({
@@ -37,7 +37,7 @@ export const changeUserRole = async (
         const { role }: { role: "ADMIN" | "USER" } = req.body.data;
 
         if (!id) {
-            return next(createHttpError(400, "No user id provided"));
+            return next(createHttpError(404));
         }
 
         const isVerified = await prisma.user.findUnique({
@@ -85,7 +85,7 @@ export const getUser = async (
     try {
         const id = req.params.id;
         if (!id) {
-            next(createHttpError(400, "No user id provided"));
+            next(createHttpError(404));
         }
 
         const users = await prisma.user.findUnique({
@@ -140,13 +140,6 @@ export const searchUsers = async (
                 isVerified: true,
             },
         });
-        // const mappedUsers = users.map((user) => {
-        //     return {
-        //         value: { ...user },
-        //         label: `${user.email} (${user.username})`,
-        //     };
-        // });
-        // res.send(mappedUsers);
         res.send(users);
     } catch (error) {
         next(error);

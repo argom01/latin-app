@@ -8,14 +8,6 @@ import prisma from "shared/prisma";
 import type { TLoginData, TRegisterData } from "types/auth.types";
 import { sendPasswordResetEmail, sendVerificationEmail } from "mail/mail";
 
-// endpoint na /api/v1/auth/recover_account [get]
-// wysyla maila z tokenem
-// zmienic routy bez parametrow na not found
-// endpoint na /api/v1/auth/recover_account/:token [?get]
-// ?odsyla strone z formularzem
-// endpoint na /api/v1/auth/recover_account/:token [post]
-// zmienia haslo i inkrementuje wersje tokena
-
 // [POST] /api/v1/auth/register
 export const register = async (
     req: Request,
@@ -136,7 +128,7 @@ export const logout = async (
     }
 };
 
-// [POST] /api/v1/recover_account
+// [POST] /api/v1/recover_account/send
 export const recoverAccount = async (
     req: Request,
     res: Response,
@@ -149,21 +141,46 @@ export const recoverAccount = async (
                 email,
             },
         });
-        sendPasswordResetEmail(user!);
+
+        if (!user) {
+            return next(createHttpError(404, "User not found"));
+        }
+        sendPasswordResetEmail(user);
         res.send("Verification email sent");
     } catch (error) {
         next(error);
     }
 };
 
-// [POST] /api/v1/recover_account/:token
-export const changePassword = async (
-    payload: any,
+// [GET] /api/v1/recover_account/:token
+export const getPasswordResetForm = async (
+    _payload: any,
     req: Request,
     res: Response,
     next: NextFunction
 ) => {
     try {
+        const token = req.params.token;
+        res.cookie("rid", token).redirect("http://localhost:3000/recovery");
+    } catch (error) {
+        next(error);
+    }
+};
+
+// [POST] /api/v1/recover_account/
+export const changePassword = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        const token = req.cookies.rid;
+        if (!token) {
+            return next(createHttpError(400, "No token"));
+        }
+
+        const payload: any = verify(token, process.env.JWT_EMAIL_TOKEN_SECRET!);
+
         const { password } = req.body.data;
         if (!password) {
             return next(createHttpError(400, "No password"));
@@ -177,6 +194,9 @@ export const changePassword = async (
             },
             data: {
                 password: hashedPassword,
+                tokenVersion: {
+                    increment: 1,
+                },
             },
         });
         res.send("Password updated");
